@@ -14,10 +14,8 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-            - name: Instalar Android SDK
+      - name: Instalar Android SDK
         uses: android-actions/setup-android@v3
-        with:
-          cmdline-tools-version: '12266719'
 
       - name: Instalar herramientas
         run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
