@@ -22,7 +22,18 @@ jobs:
         run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
       - name: Extraer proyecto
-        run: unzip -o AX_Game_Switch_Version_Prototype_v0.1.zip -d proyecto
+        run: |
+          ZIP_FILE=$(find . -maxdepth 1 -type f -iname "*.zip" | head -n 1)
+          if [ -z "$ZIP_FILE" ]; then
+            echo "ERROR: No se encontró ningún archivo ZIP"
+            ls -la
+            exit 1
+          fi
+          echo "Extrayendo: $ZIP_FILE"
+          mkdir -p proyecto
+          unzip -o "$ZIP_FILE" -d proyecto
+          echo "Contenido extraído:"
+          find proyecto -maxdepth 3 -type f | head -n 50
 
       - name: Compilar APK
         run: |
