@@ -1,21 +1,11 @@
-```yaml
-name: Build Android APK
-
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-
-permissions:
-  contents: read
+name: Android APK Builder
+on: [push, workflow_dispatch]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Descargar proyecto
+      - name: Descargar archivos
         uses: actions/checkout@v4
 
       - name: Instalar Java
@@ -24,10 +14,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Configurar Android SDK
+      - name: Instalar Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Instalar herramientas Android
+      - name: Instalar herramientas
         run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
       - name: Extraer proyecto
@@ -44,4 +34,3 @@ jobs:
           name: AX-Game-Switch-APK
           path: proyecto/**/build/outputs/apk/debug/*.apk
           if-no-files-found: error
-```
